@@ -1,0 +1,1288 @@
+{
+  "notify": {
+    "wechat_user_id": "",
+    "comment": "首次给 Bot 发任意消息后，运行 python assets/job_notify.py --save-uid 自动保存你的 uid"
+  },
+  "filter": {
+    "location_keywords": [
+      "北京",
+      "天津",
+      "河北",
+      "京津冀",
+      "雄安",
+      "石家庄",
+      "保定",
+      "唐山",
+      "廊坊",
+      "张家口",
+      "秦皇岛",
+      "邯郸",
+      "邢台",
+      "沧州",
+      "衡水",
+      "承德"
+    ],
+    "industry_keywords": [
+      "互联网",
+      "科技",
+      "软件",
+      "信息",
+      "IT",
+      "计算机",
+      "网络",
+      "数字化",
+      "智能"
+    ],
+    "ai_keywords": [
+      "AI",
+      "人工智能",
+      "大模型",
+      "算法",
+      "机器学习",
+      "深度学习",
+      "NLP",
+      "CV",
+      "Agent",
+      "AIGC",
+      "LLM",
+      "自然语言",
+      "计算机视觉",
+      "数据科学",
+      "MLOps",
+      "RAG",
+      "多模态"
+    ],
+    "cs_keywords": [
+      "软件工程",
+      "软件开发",
+      "软件研发",
+      "后端开发",
+      "前端开发",
+      "Java开发",
+      "Python开发",
+      "C++开发",
+      "Golang",
+      "Go语言",
+      "测试开发",
+      "研发工程师",
+      "程序员",
+      "算法工程师",
+      "机器学习工程师",
+      "大模型工程师",
+      "AI工程师",
+      "数据开发",
+      "数据工程师"
+    ],
+    "exclude_keywords": [
+      "销售",
+      "客服",
+      "行政",
+      "保安",
+      "保洁",
+      "司机",
+      "文员",
+      "前台",
+      "教师岗位",
+      "教师招聘",
+      "非教师岗位",
+      "辅导员",
+      "银龄教师",
+      "博士后招聘",
+      "人才招聘启事",
+      "优秀人才招聘",
+      "教学人员",
+      "已举办",
+      "举办地点",
+      "举办时间",
+      "空中宣讲",
+      "宣讲会",
+      "双选会",
+      "专场招聘会",
+      "网络招聘会",
+      "网络联合招聘",
+      "空宣",
+      "2019届",
+      "2020届",
+      "2021届",
+      "2022届",
+      "2023届",
+      "2024届",
+      "2019/",
+      "2020/",
+      "2021/",
+      "2022/",
+      "2023/",
+      "2024/",
+      "国家招聘信息平台",
+      "招聘信息平台",
+      "行纪｜",
+      "O行纪",
+      "暖通",
+      "物业",
+      "幼儿园",
+      "中小学",
+      "化工楼",
+      "漫剧",
+      "就业指导",
+      "反诈护航",
+      "反诈"
+    ],
+    "min_match_score": 60,
+    "mp_tech_keywords": [
+      "AI",
+      "人工智能",
+      "算法",
+      "大模型",
+      "机器学习",
+      "深度学习",
+      "软件",
+      "开发",
+      "Java",
+      "Python",
+      "C++",
+      "后端",
+      "前端",
+      "程序员",
+      "数据",
+      "LLM",
+      "Agent",
+      "AIGC",
+      "NLP",
+      "互联网",
+      "科技",
+      "研发",
+      "半导体",
+      "芯片",
+      "自动驾驶",
+      "游戏引擎",
+      "智能",
+      "数字化",
+      "计算机",
+      "IT",
+      "运维",
+      "测试"
+    ],
+    "comment_mp_tech": "仅公众号：在去掉「实习信息｜」前缀后的标题上匹配，避免误杀"
+  },
+  "scan": {
+    "max_schools_per_run": 15,
+    "scan_employment_web": false,
+    "comment": "scan_employment_web=false：默认只扫公众号（质量更高）；就业网噪音大"
+  },
+  "modes": {
+    "internship": {
+      "label": "实习",
+      "include_keywords": [
+        "实习",
+        "暑期实习",
+        "日常实习",
+        "可转正实习",
+        "intern",
+        "Intern"
+      ],
+      "exclude_keywords": [
+        "26届",
+        "25届",
+        "24届",
+        "社招",
+        "3年以上",
+        "5年以上",
+        "博士"
+      ],
+      "require_ai": true,
+      "allow_general_jobs": false,
+      "min_match_score": 60,
+      "comment": "含「实习」且含 AI 或计算机/软件/开发等关键词"
+    },
+    "campus2027": {
+      "label": "27届校招",
+      "include_keywords": [
+        "27届",
+        "2027届",
+        "2027",
+        "校招",
+        "应届",
+        "毕业生",
+        "秋招",
+        "春招",
+        "校园招聘"
+      ],
+      "exclude_keywords": [
+        "26届",
+        "25届",
+        "24届",
+        "23届",
+        "社招",
+        "3年以上",
+        "5年以上"
+      ],
+      "require_ai": true,
+      "allow_general_jobs": false,
+      "min_match_score": 65,
+      "comment": "27届正式岗；必须含 AI/CS 强关键词 + 校招/27届信号"
+    }
+  },
+  "wechat_accounts": {
+    "enabled": true,
+    "method": "platform",
+    "use_mp_platform": true,
+    "mp_platform_file": "temp/wechat_mp_data.json",
+    "refresh_on_scan": false,
+    "fetch_slow_on_refresh": false,
+    "fetch_slow_delay_sec": 55,
+    "fetch_delay_sec": 4.5,
+    "fetch_rate_limit_cooldown_sec": 15,
+    "comment_refresh": "refresh_on_scan=false：默认用本地缓存；Web 勾选在线拉取约3–4分钟",
+    "comment_sogou": "method=sogou 时才启用搜狗搜索（当前已关闭）",
+    "scan_all_schools": false,
+    "max_results_per_account": 20,
+    "max_age_days": 14,
+    "dedup_on_scan": false,
+    "comment_dedup": "dedup_on_scan=false：每次推送 14 天内全部匹配，不仅新增",
+    "sogou_delay_sec": 2,
+    "inbox_dir": "temp/mp_inbox",
+    "comment_inbox": "可选：把公众号文章链接/标题 txt 放入 inbox_dir，扫描时会读取",
+    "extra_queries": [
+      "校园招聘 大模型 实习 北京 2026",
+      "校招 AI 算法 北京 天津 2027届",
+      "高校就业 AI 实习 京津冀 2026"
+    ],
+    "accounts": [
+      {
+        "name": "北大就业",
+        "school": "北京大学",
+        "query": "北大就业 招聘 AI 实习 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "清华就业",
+        "school": "清华大学",
+        "query": "清华就业 招聘 AI 算法 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "人大就业",
+        "school": "中国人民大学",
+        "query": "人大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北航就业",
+        "school": "北京航空航天大学",
+        "query": "北航就业 招聘 算法 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北理就业",
+        "school": "北京理工大学",
+        "query": "北理工就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北师大就业",
+        "school": "北京师范大学",
+        "query": "北师大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "农大就业",
+        "school": "中国农业大学",
+        "query": "中国农大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "民大就业",
+        "school": "中央民族大学",
+        "query": "中央民族大学就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北科就业",
+        "school": "北京科技大学",
+        "query": "北科大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北交就业",
+        "school": "北京交通大学",
+        "query": "北京交通大学就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北邮就业",
+        "school": "北京邮电大学",
+        "query": "北邮就业 招聘 AI 算法 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北外就业",
+        "school": "北京外国语大学",
+        "query": "北外就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "中传就业",
+        "school": "中国传媒大学",
+        "query": "中传就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "央财就业",
+        "school": "中央财经大学",
+        "query": "央财就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "贸大就业",
+        "school": "对外经济贸易大学",
+        "query": "对外经贸大学就业 招聘 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "法大就业",
+        "school": "中国政法大学",
+        "query": "法大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "华电就业",
+        "school": "华北电力大学",
+        "query": "华电就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "中石大就业",
+        "school": "中国石油大学(北京)",
+        "query": "中国石油大学就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "地大就业",
+        "school": "中国地质大学(北京)",
+        "query": "地大北京就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "矿大就业",
+        "school": "中国矿业大学(北京)",
+        "query": "矿大北京就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北化就业",
+        "school": "北京化工大学",
+        "query": "北化就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北林就业",
+        "school": "北京林业大学",
+        "query": "北林就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北中医就业",
+        "school": "北京中医药大学",
+        "query": "北中医就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北工大就业",
+        "school": "北京工业大学",
+        "query": "北京工业大学 就业指导中心 招聘",
+        "alt_queries": [
+          "北工大 就业 招聘 2026",
+          "北京工业大学 双选 宣讲 2026",
+          "北京工业大学 实习 校招 2026"
+        ],
+        "account_aliases": ["北京工业大学", "北工大就业", "北京工业大学就业指导中心"],
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "首师大就业",
+        "school": "首都师范大学",
+        "query": "首都师范大学就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "首经贸就业",
+        "school": "首都经济贸易大学",
+        "query": "首经贸就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "北工商就业",
+        "school": "北京工商大学",
+        "query": "北京工商大学就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "信息科大就业",
+        "school": "北京信息科技大学",
+        "query": "信息科大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "南开就业",
+        "school": "南开大学",
+        "query": "南开就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "天大就业",
+        "school": "天津大学",
+        "query": "天津大学就业 招聘 AI 算法 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "天津医大就业",
+        "school": "天津医科大学",
+        "query": "天津医大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "河工大就业",
+        "school": "河北工业大学",
+        "query": "河北工业大学就业指导中心",
+        "alt_queries": [
+          "河北工业大学就业指导中心 招聘 2026",
+          "河北工业大学 双选会 宣讲 2026",
+          "河工大 就业 招聘 2026"
+        ],
+        "account_aliases": ["河北工业大学就业指导中心", "河工大就业", "河北工业大学"],
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "天工大就业",
+        "school": "天津工业大学",
+        "query": "天工大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "天津财大就业",
+        "school": "天津财经大学",
+        "query": "天津财大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "天津师大就业",
+        "school": "天津师范大学",
+        "query": "天津师大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "天津科大就业",
+        "school": "天津科技大学",
+        "query": "天津科大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "天理工就业",
+        "school": "天津理工大学",
+        "query": "天理工就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "天商就业",
+        "school": "天津商业大学",
+        "query": "天津商业大学就业 招聘 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "中航大就业",
+        "school": "中国民航大学",
+        "query": "中航大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "燕大就业",
+        "school": "燕山大学",
+        "query": "燕山大学就业 招聘 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "河大就业",
+        "school": "河北大学",
+        "query": "河北大学就业 招聘 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "河北师大就业",
+        "school": "河北师范大学",
+        "query": "河北师范大学就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "河北经贸就业",
+        "school": "河北经贸大学",
+        "query": "河北经贸大学就业 招聘 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "石铁大就业",
+        "school": "石家庄铁道大学",
+        "query": "石铁大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "华北理工就业",
+        "school": "华北理工大学",
+        "query": "华北理工大学就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "河北农大就业",
+        "school": "河北农业大学",
+        "query": "河北农大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "河北科大就业",
+        "school": "河北科技大学",
+        "query": "河北科大就业 招聘 AI 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "河工石家庄就业",
+        "school": "河北工业大学(石家庄)",
+        "query": "河北工业大学石家庄 就业 招聘 2026",
+        "rss_url": "",
+        "enabled": true
+      },
+      {
+        "name": "东秦就业",
+        "school": "东北大学秦皇岛分校",
+        "query": "东秦就业",
+        "alt_queries": [
+          "东秦就业 招聘 2026",
+          "东北大学秦皇岛分校 就业指导中心",
+          "东北大学秦皇岛 双选 宣讲 2026"
+        ],
+        "account_aliases": ["东秦就业", "东北大学秦皇岛", "东秦"],
+        "rss_url": "",
+        "enabled": true
+      }
+    ],
+    "comment_sogou": "method=sogou 时通过搜狗微信搜索抓公众号文章，无需 Docker/RSS；也可填 rss_url 走 RSS 双通道",
+    "comment_accounts": "49校就业公众号，query 针对各校官方就业号搜狗搜索"
+  },
+  "schools": [
+    {
+      "name": "北京大学",
+      "province": "北京",
+      "tier": "985",
+      "urls": [
+        "https://scc.pku.edu.cn/",
+        "https://scc.pku.edu.cn/frontpage/default.html"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.pku.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://scc.pku.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.pku.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.pku.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "清华大学",
+      "province": "北京",
+      "tier": "985",
+      "urls": [
+        "https://career.tsinghua.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.tsinghua.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "中国人民大学",
+      "province": "北京",
+      "tier": "985",
+      "urls": [
+        "https://career.ruc.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.ruc.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.ruc.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.ruc.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京航空航天大学",
+      "province": "北京",
+      "tier": "985",
+      "urls": [
+        "https://career.buaa.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.buaa.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.buaa.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.buaa.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京理工大学",
+      "province": "北京",
+      "tier": "985",
+      "urls": [
+        "https://job.bit.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.bit.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.bit.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.bit.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京师范大学",
+      "province": "北京",
+      "tier": "985",
+      "urls": [
+        "https://career.bnu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.bnu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.bnu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.bnu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "中国农业大学",
+      "province": "北京",
+      "tier": "985",
+      "urls": [
+        "https://scc.cau.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cau.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://scc.cau.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cau.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cau.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "中央民族大学",
+      "province": "北京",
+      "tier": "985",
+      "urls": [
+        "https://career.muc.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.muc.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.muc.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.muc.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ],
+      "extra_urls": [
+        "https://career.muc.edu.cn/"
+      ]
+    },
+    {
+      "name": "北京科技大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://zhaopin.ustb.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.ustb.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://zhaopin.ustb.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.ustb.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.ustb.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京交通大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://job.bjtu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.bjtu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.bjtu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.bjtu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京邮电大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://job.bupt.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.bupt.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.bupt.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.bupt.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京外国语大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://jy.bfsu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.bfsu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://jy.bfsu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.bfsu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.bfsu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "中国传媒大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://jy.cuc.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cuc.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://jy.cuc.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cuc.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cuc.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "中央财经大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://job.cufe.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cufe.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cufe.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cufe.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "对外经济贸易大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://career.uibe.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.uibe.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.uibe.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.uibe.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ],
+      "extra_urls": [
+        "https://career.uibe.edu.cn/"
+      ]
+    },
+    {
+      "name": "中国政法大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://career.cupl.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cupl.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cupl.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cupl.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "华北电力大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://career.ncepu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.ncepu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.ncepu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.ncepu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "中国石油大学(北京)",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://career.cup.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cup.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cup.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cup.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ],
+      "extra_urls": [
+        "https://career.cup.edu.cn/recruitment/index.html",
+        "https://career.cup.edu.cn/"
+      ]
+    },
+    {
+      "name": "中国地质大学(北京)",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://job.cugb.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cugb.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cugb.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cugb.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "中国矿业大学(北京)",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://career.cumtb.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cumtb.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cumtb.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cumtb.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京化工大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://career.buct.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.buct.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.buct.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.buct.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京林业大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://career.bjfu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.bjfu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.bjfu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.bjfu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京中医药大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://jy.bucm.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.bucm.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://jy.bucm.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.bucm.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.bucm.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ],
+      "extra_urls": [
+        "https://jy.bucm.edu.cn/"
+      ]
+    },
+    {
+      "name": "北京工业大学",
+      "province": "北京",
+      "tier": "211",
+      "urls": [
+        "https://job.bjut.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.bjut.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.bjut.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.bjut.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ],
+      "extra_urls": [
+        "https://job.bjut.edu.cn/frontpage/default.html"
+      ]
+    },
+    {
+      "name": "首都师范大学",
+      "province": "北京",
+      "tier": "一本",
+      "urls": [
+        "https://career.cnu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cnu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cnu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cnu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "首都经济贸易大学",
+      "province": "北京",
+      "tier": "一本",
+      "urls": [
+        "https://career.cueb.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cueb.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cueb.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cueb.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京工商大学",
+      "province": "北京",
+      "tier": "一本",
+      "urls": [
+        "https://jy.btbu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.btbu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://jy.btbu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.btbu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.btbu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "北京信息科技大学",
+      "province": "北京",
+      "tier": "一本",
+      "urls": [
+        "https://jy.bistu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.bistu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://jy.bistu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.bistu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.bistu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "南开大学",
+      "province": "天津",
+      "tier": "985",
+      "urls": [
+        "https://career.nankai.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.nankai.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.nankai.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.nankai.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "天津大学",
+      "province": "天津",
+      "tier": "985",
+      "urls": [
+        "https://career.tju.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.tju.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.tju.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.tju.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "天津医科大学",
+      "province": "天津",
+      "tier": "211",
+      "urls": [
+        "https://career.tmu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.tmu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.tmu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.tmu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "河北工业大学",
+      "province": "天津",
+      "tier": "211",
+      "urls": [
+        "https://career.hebut.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.hebut.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.hebut.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.hebut.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ],
+      "extra_urls": [
+        "https://career.hebut.edu.cn/correcruit/index"
+      ]
+    },
+    {
+      "name": "天津工业大学",
+      "province": "天津",
+      "tier": "一本",
+      "urls": [
+        "https://career.tiangong.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.tiangong.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.tiangong.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.tiangong.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "天津财经大学",
+      "province": "天津",
+      "tier": "一本",
+      "urls": [
+        "https://career.tjufe.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.tjufe.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.tjufe.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.tjufe.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "天津师范大学",
+      "province": "天津",
+      "tier": "一本",
+      "urls": [
+        "https://career.tjnu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.tjnu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.tjnu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.tjnu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "天津科技大学",
+      "province": "天津",
+      "tier": "一本",
+      "urls": [
+        "https://career.tust.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.tust.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.tust.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.tust.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "天津理工大学",
+      "province": "天津",
+      "tier": "一本",
+      "urls": [
+        "https://career.tjut.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.tjut.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.tjut.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.tjut.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "天津商业大学",
+      "province": "天津",
+      "tier": "一本",
+      "urls": [
+        "https://career.tjcu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.tjcu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.tjcu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.tjcu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ],
+      "extra_urls": [
+        "https://career.tjcu.edu.cn/"
+      ]
+    },
+    {
+      "name": "中国民航大学",
+      "province": "天津",
+      "tier": "一本",
+      "urls": [
+        "https://career.cauc.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.cauc.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.cauc.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.cauc.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "燕山大学",
+      "province": "河北",
+      "tier": "一本",
+      "urls": [
+        "https://career.ysu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.ysu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.ysu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.ysu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "河北大学",
+      "province": "河北",
+      "tier": "一本",
+      "urls": [
+        "https://jy.hbu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.hbu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://jy.hbu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.hbu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.hbu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "河北师范大学",
+      "province": "河北",
+      "tier": "一本",
+      "urls": [
+        "https://career.hebtu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.hebtu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.hebtu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.hebtu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "河北经贸大学",
+      "province": "河北",
+      "tier": "一本",
+      "urls": [
+        "https://career.heuet.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.heuet.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.heuet.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.heuet.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "石家庄铁道大学",
+      "province": "河北",
+      "tier": "一本",
+      "urls": [
+        "https://career.stdu.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.stdu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.stdu.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.stdu.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "华北理工大学",
+      "province": "河北",
+      "tier": "一本",
+      "urls": [
+        "https://career.ncst.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.ncst.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.ncst.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.ncst.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "河北农业大学",
+      "province": "河北",
+      "tier": "一本",
+      "urls": [
+        "https://career.hebau.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.hebau.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.hebau.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.hebau.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "河北科技大学",
+      "province": "河北",
+      "tier": "一本",
+      "urls": [
+        "https://career.hebust.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.hebust.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.hebust.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.hebust.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    },
+    {
+      "name": "河北工业大学(石家庄)",
+      "province": "河北",
+      "tier": "211",
+      "urls": [
+        "https://career.hebut.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.hebut.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.hebut.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.hebut.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ],
+      "extra_urls": [
+        "https://career.hebut.edu.cn/correcruit/index"
+      ]
+    },
+    {
+      "name": "东北大学秦皇岛分校",
+      "province": "河北",
+      "tier": "985",
+      "urls": [
+        "https://career.neuq.edu.cn/"
+      ],
+      "xxfb_urls": [
+        "https://career.cic.neuq.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://career.neuq.edu.cn/xsglxt/f/jyxt/anony/xxfb",
+        "https://job.neuq.edu.cn/xsglxt/f/jyxt/anony/xxfb"
+      ]
+    }
+  ]
+}
