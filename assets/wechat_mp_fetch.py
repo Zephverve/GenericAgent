@@ -376,6 +376,9 @@ def _probe_api(session, token, fakeid_cache, targets):
 
 def _login_via_playwright(sync_playwright, headless):
     """Playwright 仅用于登录/刷新 cookie，API 走 requests。"""
+    from runtime_env import must_headless_browser
+    if must_headless_browser():
+        headless = True
     has_session = os.path.isfile(STATE_PATH)
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=headless, args=['--no-sandbox'])
@@ -435,8 +438,13 @@ def _fetch_platform_data_impl(headless, out_path, article_count, max_age_days, o
     total = len(targets)
 
     has_session = os.path.isfile(STATE_PATH)
+    from runtime_env import must_headless_browser, online_fetch_allowed
     if headless is None:
-        headless = has_session
+        headless = True if must_headless_browser() else has_session
+
+    if not online_fetch_allowed():
+        raise FetchNeedsLogin(
+            '云端不支持在线拉取。请取消勾选「在线拉取」，或在本机 Mac 更新 data/wechat_mp_data.json')
 
     print(f'[mp_fetch] 在线拉取 {total} 校 → {out_path} (headless={headless})')
     if on_progress:
@@ -452,6 +460,9 @@ def _fetch_platform_data_impl(headless, out_path, article_count, max_age_days, o
             token = ''
 
     if not token:
+        if must_headless_browser():
+            raise FetchNeedsLogin(
+                'mp 未登录且云端无法扫码。请取消「在线拉取」，使用 data/wechat_mp_data.json 缓存扫描。')
         if on_progress:
             on_progress(0, total, '启动浏览器登录…')
         token = _login_via_playwright(sync_playwright, headless)

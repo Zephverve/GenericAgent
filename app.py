@@ -14,12 +14,31 @@ from pathlib import Path
 _ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(_ROOT / 'assets'))
 MATCHES = _ROOT / 'temp' / 'job_matches'
+DATA = _ROOT / 'data'
 PORT = int(os.environ.get('PORT') or os.environ.get('JOB_MONITOR_PORT', '8765'))
+
+
+def _seed_runtime_data():
+    """云端无 temp 缓存时，从 data/ 复制公众号数据（本地 Mac 可定期更新 data/wechat_mp_data.json）。"""
+    import shutil
+    temp_dir = _ROOT / 'temp'
+    temp_dir.mkdir(parents=True, exist_ok=True)
+    src = DATA / 'wechat_mp_data.json'
+    dst = temp_dir / 'wechat_mp_data.json'
+    if src.is_file() and not dst.is_file():
+        shutil.copy2(src, dst)
+        print(f'[app] 已从 data/ 初始化 wechat_mp_data.json')
 
 from fastapi import FastAPI, Query
 from fastapi.responses import HTMLResponse, FileResponse, JSONResponse
 
 app = FastAPI(title='岗位监控', docs_url=None, redoc_url=None, openapi_url=None)
+
+
+@app.on_event('startup')
+def _on_startup():
+    _seed_runtime_data()
+    MATCHES.mkdir(parents=True, exist_ok=True)
 
 _scan_lock = threading.Lock()
 _STALE_SEC = 600  # 10 分钟（仅本地扫描）
@@ -73,8 +92,12 @@ def _list_reports(limit=20):
 
 
 def _run_scan(mode: str, refresh: bool):
+    from runtime_env import online_fetch_allowed
     from wechat_mp_scan import scan_wechat_accounts
     from job_filter import get_mode_config, save_match_report, save_jobs_html
+
+    if refresh and not online_fetch_allowed():
+        refresh = False
 
     label = get_mode_config(mode).get('label', mode)
     try:
@@ -110,6 +133,9 @@ def _run_scan(mode: str, refresh: bool):
 
 
 def _start_scan(mode: str, refresh: bool):
+    from runtime_env import online_fetch_allowed
+    if refresh and not online_fetch_allowed():
+        return False, '云端不支持在线拉取，请取消勾选，直接使用缓存扫描'
     with _scan_lock:
         if _state['running']:
             if _is_stale_running():
@@ -180,7 +206,10 @@ INDEX_HTML = '''<!DOCTYPE html>
     </button>
   </div>
 
-  <label class="opt"><input type="checkbox" id="refresh"> 在线拉取（约3–4分钟，有缓存；日常不必勾选）</label>
+  <label class="opt" id="refreshRow" style="display:none"><input type="checkbox" id="refresh"> 在线拉取（约3–4分钟，仅本机可用）</label>
+  <div class="sub cloud-note" id="cloudNote" style="display:none;color:#d48806;margin-top:-8px">
+    ☁️ 云端模式：使用已打包的公众号缓存，直接点扫描即可（无需在线拉取）
+  </div>
 
   <div id="status" class="status">
     <div class="msg" id="msg"></div>
@@ -273,6 +302,13 @@ async function loadHist() {
 }
 
 loadHist();
+fetch('/api/config').then(r=>r.json()).then(c=>{
+  if (!c.online_fetch) {
+    document.getElementById('cloudNote').style.display = 'block';
+  } else {
+    document.getElementById('refreshRow').style.display = 'flex';
+  }
+});
 fetch('/api/status').then(r=>r.json()).then(s=>{ if(s.running) poll(); });
 </script>
 </body>
@@ -282,6 +318,15 @@ fetch('/api/status').then(r=>r.json()).then(s=>{ if(s.running) poll(); });
 @app.get('/', response_class=HTMLResponse)
 def index():
     return INDEX_HTML
+
+
+@app.get('/api/config')
+def api_config():
+    from runtime_env import online_fetch_allowed, is_cloud_runtime
+    return {
+        'online_fetch': online_fetch_allowed(),
+        'cloud': is_cloud_runtime(),
+    }
 
 
 @app.post('/api/scan')
@@ -317,7 +362,11 @@ def get_report(filename: str):
     safe = Path(filename).name
     path = MATCHES / safe
     if not path.is_file():
-        return JSONResponse({'error': 'not found'}, status_code=404)
+        return HTMLResponse(
+            '<h1>报告不存在</h1><p>可能已被清理或服务重启后丢失。</p>'
+            '<p><a href="/">返回首页重新扫描</a></p>',
+            status_code=404,
+        )
     return FileResponse(path, media_type='text/html; charset=utf-8')
 
 
@@ -325,6 +374,7 @@ if __name__ == '__main__':
     for k in ('HTTP_PROXY', 'HTTPS_PROXY', 'http_proxy', 'https_proxy'):
         os.environ.pop(k, None)
     import uvicorn
+    _seed_runtime_data()
     MATCHES.mkdir(parents=True, exist_ok=True)
     print(f'[job_monitor_web] http://0.0.0.0:{PORT}')
     print(f'  手机访问: http://<本机局域网IP>:{PORT}')

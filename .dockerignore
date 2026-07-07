@@ -1,0 +1,11 @@
+.git
+.workbuddy/
+temp/*
+!temp/.gitkeep
+sche_tasks/
+*.pdf
+*.md
+!README.md
+__pycache__
+*.pyc
+.env

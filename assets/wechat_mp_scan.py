@@ -23,6 +23,12 @@ FETCH_TTL_SEC = 300
 
 def _online_fetch(on_progress=None, force=False):
     """在线拉取 mp 数据；5 分钟内重复调用会跳过（避免双模式扫两次）。"""
+    from runtime_env import online_fetch_allowed
+    if not online_fetch_allowed():
+        raise RuntimeError(
+            '云端不支持「在线拉取」（无法扫码登录微信公众平台）。'
+            '请直接点扫描，使用已缓存的 data/wechat_mp_data.json；'
+            '更新数据请在本地 Mac 运行: python assets/wechat_mp_fetch.py')
     global _LAST_FETCH_AT
     if not force and _LAST_FETCH_AT and time.time() - _LAST_FETCH_AT < FETCH_TTL_SEC:
         print('[mp_scan] skip fetch (5min 内已拉取)')
